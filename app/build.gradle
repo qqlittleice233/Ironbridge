@@ -58,5 +58,4 @@ dependencies {
 
 dependencies {
     compileOnly 'de.robv.android.xposed:api:82'
-    implementation(project(':XServiceManager'))
 }

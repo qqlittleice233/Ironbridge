@@ -15,4 +15,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "IronBridge"
 include ':app'
-include ':XServiceManager'
