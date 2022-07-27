@@ -7,7 +7,7 @@ interface IIronbridgeManager {
 
     boolean setRule(in BridgeRule rule);
 
-    boolean deleteRule(String packageName);
+    boolean deleteRule(String packageName, String key);
 
     List<BridgeRule> getAllRules();
 

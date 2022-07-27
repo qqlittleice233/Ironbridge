@@ -10,7 +10,7 @@ class IronbridgeManagerService: IIronbridgeManager.Stub() {
         TODO("Not yet implemented")
     }
 
-    override fun deleteRule(packageName: String?): Boolean {
+    override fun deleteRule(packageName: String?, key: String?): Boolean {
         TODO("Not yet implemented")
     }
 
