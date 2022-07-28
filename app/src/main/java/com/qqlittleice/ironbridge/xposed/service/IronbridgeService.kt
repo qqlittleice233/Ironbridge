@@ -1,20 +1,20 @@
 package com.qqlittleice.ironbridge.xposed.service
 
-import com.qqlittleice.ironbridge.IBridgeListener
-import com.qqlittleice.ironbridge.IIronbridge
+import com.qqlittleice.ironbridge.aidl.BridgeListener
+import com.qqlittleice.ironbridge.aidl.Ironbridge
 import com.qqlittleice.ironbridge.xposed.utils.LogUtil
 
-class IronbridgeService: IIronbridge.Stub() {
+class IronbridgeService: Ironbridge.Stub() {
 
-    private val mListeners = arrayListOf<IBridgeListener>()
+    private val mListeners = arrayListOf<BridgeListener>()
 
-    override fun addListener(iBridgeListener: IBridgeListener) {
+    override fun addListener(iBridgeListener: BridgeListener) {
         runCatching {
             mListeners.add(iBridgeListener)
         }.onFailure { LogUtil.xpe(it) }
     }
 
-    override fun removeListener(iBridgeListener: IBridgeListener?) {
+    override fun removeListener(iBridgeListener: BridgeListener?) {
         runCatching {
             mListeners.remove(iBridgeListener)
         }.onFailure { LogUtil.xpe(it) }
