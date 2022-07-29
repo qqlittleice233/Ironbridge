@@ -25,6 +25,8 @@ public interface BridgeListener extends IInterface {
         @Override
         public void onReceivedBoolean(String tag, boolean value) {}
         @Override
+        public String getChannel() { return null; }
+        @Override
         public IBinder asBinder() { return null; }
     }
 
@@ -38,6 +40,7 @@ public interface BridgeListener extends IInterface {
         static final int TRANSACTION_onReceivedFloat = IBinder.FIRST_CALL_TRANSACTION + 3;
         static final int TRANSACTION_onReceivedDouble = IBinder.FIRST_CALL_TRANSACTION + 4;
         static final int TRANSACTION_onReceivedBoolean = IBinder.FIRST_CALL_TRANSACTION + 5;
+        static final int TRANSACTION_getChannel = IBinder.FIRST_CALL_TRANSACTION + 6;
 
         public Stub() {
             attachInterface(this, DESCRIPTOR);
@@ -107,6 +110,13 @@ public interface BridgeListener extends IInterface {
                     String tag = data.readString();
                     boolean value = data.readInt() != 0;
                     onReceivedBoolean(tag, value);
+                    return true;
+                }
+                case TRANSACTION_getChannel: {
+                    data.enforceInterface(descriptor);
+                    String _result = getChannel();
+                    reply.writeNoException();
+                    reply.writeString(_result);
                     return true;
                 }
                 default: {
@@ -243,6 +253,26 @@ public interface BridgeListener extends IInterface {
                     _data.recycle();
                 }
             }
+
+            @Override
+            public String getChannel() throws android.os.RemoteException {
+                Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
+                String _result;
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    boolean _status = mRemote.transact(Stub.TRANSACTION_getChannel, _data, _reply, 0);
+                    if (!_status && Stub.getDefaultImpl() != null) {
+                        return Stub.getDefaultImpl().getChannel();
+                    }
+                    _reply.readException();
+                    _result = _reply.readString();
+                } finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+                return _result;
+            }
         }
     }
 
@@ -252,4 +282,6 @@ public interface BridgeListener extends IInterface {
     void onReceivedFloat(java.lang.String tag, float value) throws android.os.RemoteException;
     void onReceivedDouble(java.lang.String tag, double value) throws android.os.RemoteException;
     void onReceivedBoolean(java.lang.String tag, boolean value) throws android.os.RemoteException;
+
+    String getChannel() throws android.os.RemoteException;
 }

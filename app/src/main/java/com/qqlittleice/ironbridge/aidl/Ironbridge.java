@@ -14,17 +14,17 @@ public interface Ironbridge extends IInterface {
         @Override
         public void removeListener(BridgeListener listener) {}
         @Override
-        public void sendString(String tag, String value) {}
+        public void sendString(String channel, String value) {}
         @Override
-        public void sendInt(String tag, int value) {}
+        public void sendInt(String channel, int value) {}
         @Override
-        public void sendLong(String tag, long value) {}
+        public void sendLong(String channel, long value) {}
         @Override
-        public void sendFloat(String tag, float value) {}
+        public void sendFloat(String channel, float value) {}
         @Override
-        public void sendDouble(String tag, double value) {}
+        public void sendDouble(String channel, double value) {}
         @Override
-        public void sendBoolean(String tag, boolean value) {}
+        public void sendBoolean(String channel, boolean value) {}
         @Override
         public IBinder asBinder() { return null; }
     }
@@ -84,44 +84,44 @@ public interface Ironbridge extends IInterface {
                 }
                 case TRANSACTION_sendString: {
                     data.enforceInterface(descriptor);
-                    String tag = data.readString();
+                    String channel = data.readString();
                     String value = data.readString();
-                    sendString(tag, value);
+                    sendString(channel, value);
                     return true;
                 }
                 case TRANSACTION_sendInt: {
                     data.enforceInterface(descriptor);
-                    String tag = data.readString();
+                    String channel = data.readString();
                     int value = data.readInt();
-                    sendInt(tag, value);
+                    sendInt(channel, value);
                     return true;
                 }
                 case TRANSACTION_sendLong: {
                     data.enforceInterface(descriptor);
-                    String tag = data.readString();
+                    String channel = data.readString();
                     long value = data.readLong();
-                    sendLong(tag, value);
+                    sendLong(channel, value);
                     return true;
                 }
                 case TRANSACTION_sendFloat: {
                     data.enforceInterface(descriptor);
-                    String tag = data.readString();
+                    String channel = data.readString();
                     float value = data.readFloat();
-                    sendFloat(tag, value);
+                    sendFloat(channel, value);
                     return true;
                 }
                 case TRANSACTION_sendDouble: {
                     data.enforceInterface(descriptor);
-                    String tag = data.readString();
+                    String channel = data.readString();
                     double value = data.readDouble();
-                    sendDouble(tag, value);
+                    sendDouble(channel, value);
                     return true;
                 }
                 case TRANSACTION_sendBoolean: {
                     data.enforceInterface(descriptor);
-                    String tag = data.readString();
+                    String channel = data.readString();
                     boolean value = data.readInt() != 0;
-                    sendBoolean(tag, value);
+                    sendBoolean(channel, value);
                     return true;
                 }
                 default: {
@@ -194,15 +194,15 @@ public interface Ironbridge extends IInterface {
             }
 
             @Override
-            public void sendString(String tag, String value) throws RemoteException {
+            public void sendString(String channel, String value) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
-                    _data.writeString(tag);
+                    _data.writeString(channel);
                     _data.writeString(value);
                     boolean _status = mRemote.transact(Stub.TRANSACTION_sendString, _data, null, IBinder.FLAG_ONEWAY);
                     if (!_status && getDefaultImpl() != null) {
-                        getDefaultImpl().sendString(tag, value);
+                        getDefaultImpl().sendString(channel, value);
                     }
                 } finally {
                     _data.recycle();
@@ -210,15 +210,15 @@ public interface Ironbridge extends IInterface {
             }
 
             @Override
-            public void sendInt(String tag, int value) throws RemoteException {
+            public void sendInt(String channel, int value) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
-                    _data.writeString(tag);
+                    _data.writeString(channel);
                     _data.writeInt(value);
                     boolean _status = mRemote.transact(Stub.TRANSACTION_sendInt, _data, null, IBinder.FLAG_ONEWAY);
                     if (!_status && getDefaultImpl() != null) {
-                        getDefaultImpl().sendInt(tag, value);
+                        getDefaultImpl().sendInt(channel, value);
                     }
                 } finally {
                     _data.recycle();
@@ -226,15 +226,15 @@ public interface Ironbridge extends IInterface {
             }
 
             @Override
-            public void sendLong(String tag, long value) throws RemoteException {
+            public void sendLong(String channel, long value) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
-                    _data.writeString(tag);
+                    _data.writeString(channel);
                     _data.writeLong(value);
                     boolean _status = mRemote.transact(Stub.TRANSACTION_sendLong, _data, null, IBinder.FLAG_ONEWAY);
                     if (!_status && getDefaultImpl() != null) {
-                        getDefaultImpl().sendLong(tag, value);
+                        getDefaultImpl().sendLong(channel, value);
                     }
                 } finally {
                     _data.recycle();
@@ -242,15 +242,15 @@ public interface Ironbridge extends IInterface {
             }
 
             @Override
-            public void sendFloat(String tag, float value) throws RemoteException {
+            public void sendFloat(String channel, float value) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
-                    _data.writeString(tag);
+                    _data.writeString(channel);
                     _data.writeFloat(value);
                     boolean _status = mRemote.transact(Stub.TRANSACTION_sendFloat, _data, null, IBinder.FLAG_ONEWAY);
                     if (!_status && getDefaultImpl() != null) {
-                        getDefaultImpl().sendFloat(tag, value);
+                        getDefaultImpl().sendFloat(channel, value);
                     }
                 } finally {
                     _data.recycle();
@@ -258,15 +258,15 @@ public interface Ironbridge extends IInterface {
             }
 
             @Override
-            public void sendDouble(String tag, double value) throws RemoteException {
+            public void sendDouble(String channel, double value) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
-                    _data.writeString(tag);
+                    _data.writeString(channel);
                     _data.writeDouble(value);
                     boolean _status = mRemote.transact(Stub.TRANSACTION_sendDouble, _data, null, IBinder.FLAG_ONEWAY);
                     if (!_status && getDefaultImpl() != null) {
-                        getDefaultImpl().sendDouble(tag, value);
+                        getDefaultImpl().sendDouble(channel, value);
                     }
                 } finally {
                     _data.recycle();
@@ -274,15 +274,15 @@ public interface Ironbridge extends IInterface {
             }
 
             @Override
-            public void sendBoolean(String tag, boolean value) throws RemoteException {
+            public void sendBoolean(String channel, boolean value) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
-                    _data.writeString(tag);
+                    _data.writeString(channel);
                     _data.writeInt(value ? 1 : 0);
                     boolean _status = mRemote.transact(Stub.TRANSACTION_sendBoolean, _data, null, IBinder.FLAG_ONEWAY);
                     if (!_status && getDefaultImpl() != null) {
-                        getDefaultImpl().sendBoolean(tag, value);
+                        getDefaultImpl().sendBoolean(channel, value);
                     }
                 } finally {
                     _data.recycle();
@@ -293,11 +293,11 @@ public interface Ironbridge extends IInterface {
 
     void addListener(BridgeListener listener) throws RemoteException;
     void removeListener(BridgeListener listener) throws RemoteException;
-    void sendString(String tag, String value) throws RemoteException;
-    void sendInt(String tag, int value) throws RemoteException;
-    void sendLong(String tag, long value) throws RemoteException;
-    void sendFloat(String tag, float value) throws RemoteException;
-    void sendDouble(String tag, double value) throws RemoteException;
-    void sendBoolean(String tag, boolean value) throws RemoteException;
+    void sendString(String channel, String value) throws RemoteException;
+    void sendInt(String channel, int value) throws RemoteException;
+    void sendLong(String channel, long value) throws RemoteException;
+    void sendFloat(String channel, float value) throws RemoteException;
+    void sendDouble(String channel, double value) throws RemoteException;
+    void sendBoolean(String channel, boolean value) throws RemoteException;
 
 }
