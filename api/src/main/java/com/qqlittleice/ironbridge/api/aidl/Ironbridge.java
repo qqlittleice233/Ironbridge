@@ -1,4 +1,4 @@
-package com.qqlittleice.ironbridge.aidl;
+package com.qqlittleice.ironbridge.api.aidl;
 
 import android.os.Binder;
 import android.os.IBinder;
@@ -6,8 +6,14 @@ import android.os.IInterface;
 import android.os.Parcel;
 import android.os.RemoteException;
 
+import androidx.annotation.Keep;
+
+import com.qqlittleice.ironbridge.api.annotation.BridgeVersion;
+
+@Keep
 public interface Ironbridge extends IInterface {
 
+    @Keep
     class Default implements Ironbridge {
         @Override
         public void addListener(BridgeListener listener) {}
@@ -29,6 +35,7 @@ public interface Ironbridge extends IInterface {
         public IBinder asBinder() { return null; }
     }
 
+    @Keep
     abstract class Stub extends Binder implements Ironbridge {
 
         public static final String DESCRIPTOR = "com.qqlittleice.ironbridge.aidl.Ironbridge";
@@ -54,7 +61,7 @@ public interface Ironbridge extends IInterface {
             if ((localInterface instanceof Ironbridge)) {
                 return (Ironbridge) localInterface;
             }
-            return new Ironbridge.Stub.Proxy(obj);
+            return new Proxy(obj);
         }
 
         @Override
@@ -151,6 +158,7 @@ public interface Ironbridge extends IInterface {
             return Proxy.sDefaultImpl;
         }
 
+        @Keep
         private static class Proxy implements Ironbridge {
 
             private final IBinder mRemote;
@@ -303,13 +311,28 @@ public interface Ironbridge extends IInterface {
         }
     }
 
+    @BridgeVersion(1)
     void addListener(BridgeListener listener) throws RemoteException;
+
+    @BridgeVersion(1)
     void removeListener(BridgeListener listener) throws RemoteException;
+
+    @BridgeVersion(1)
     void sendString(String channel, String key, String value) throws RemoteException;
+
+    @BridgeVersion(1)
     void sendInt(String channel, String key, int value) throws RemoteException;
+
+    @BridgeVersion(1)
     void sendLong(String channel, String key, long value) throws RemoteException;
+
+    @BridgeVersion(1)
     void sendFloat(String channel, String key, float value) throws RemoteException;
+
+    @BridgeVersion(1)
     void sendDouble(String channel, String key, double value) throws RemoteException;
+
+    @BridgeVersion(1)
     void sendBoolean(String channel, String key, boolean value) throws RemoteException;
 
 }

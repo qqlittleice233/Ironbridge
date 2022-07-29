@@ -1,7 +1,7 @@
 package com.qqlittleice.ironbridge.xposed.service
 
-import com.qqlittleice.ironbridge.aidl.BridgeListener
-import com.qqlittleice.ironbridge.aidl.Ironbridge
+import com.qqlittleice.ironbridge.api.aidl.BridgeListener
+import com.qqlittleice.ironbridge.api.aidl.Ironbridge
 import com.qqlittleice.ironbridge.xposed.utils.LogUtil
 
 class IronbridgeService: Ironbridge.Stub() {

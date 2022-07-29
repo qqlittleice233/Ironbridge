@@ -1,4 +1,4 @@
-package com.qqlittleice.ironbridge.aidl;
+package com.qqlittleice.ironbridge.api.aidl;
 
 import android.os.Binder;
 import android.os.IBinder;
@@ -6,11 +6,14 @@ import android.os.IInterface;
 import android.os.Parcel;
 import android.os.RemoteException;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.annotation.Keep;
 
+import com.qqlittleice.ironbridge.api.annotation.BridgeVersion;
+
+@Keep
 public interface BridgeListener extends IInterface {
 
+    @Keep
     class Default implements BridgeListener {
         @Override
         public void onReceivedString(String key, String value) {}
@@ -30,6 +33,7 @@ public interface BridgeListener extends IInterface {
         public IBinder asBinder() { return null; }
     }
 
+    @Keep
     abstract class Stub extends Binder implements BridgeListener {
 
         private static final String DESCRIPTOR = "com.qqlittleice.ironbridge.aidl.BridgeListener";
@@ -54,7 +58,7 @@ public interface BridgeListener extends IInterface {
             if (localInterface instanceof BridgeListener) {
                 return (BridgeListener)localInterface;
             }
-            return new BridgeListener.Stub.Proxy(obj);
+            return new Proxy(obj);
         }
 
         @Override
@@ -137,9 +141,10 @@ public interface BridgeListener extends IInterface {
         }
 
         public static BridgeListener getDefaultImpl() {
-            return Stub.Proxy.sDefaultImpl;
+            return Proxy.sDefaultImpl;
         }
 
+        @Keep
         private static class Proxy implements BridgeListener {
 
             private final IBinder mRemote;
@@ -255,7 +260,7 @@ public interface BridgeListener extends IInterface {
             }
 
             @Override
-            public String getChannel() throws android.os.RemoteException {
+            public String getChannel() throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
                 String _result;
@@ -276,12 +281,24 @@ public interface BridgeListener extends IInterface {
         }
     }
 
-    void onReceivedString(String key, String value) throws android.os.RemoteException;
-    void onReceivedInt(String key, int value) throws android.os.RemoteException;
-    void onReceivedLong(String key, long value) throws android.os.RemoteException;
-    void onReceivedFloat(String key, float value) throws android.os.RemoteException;
-    void onReceivedDouble(String key, double value) throws android.os.RemoteException;
-    void onReceivedBoolean(String key, boolean value) throws android.os.RemoteException;
+    @BridgeVersion(1)
+    void onReceivedString(String key, String value) throws RemoteException;
 
-    String getChannel() throws android.os.RemoteException;
+    @BridgeVersion(1)
+    void onReceivedInt(String key, int value) throws RemoteException;
+
+    @BridgeVersion(1)
+    void onReceivedLong(String key, long value) throws RemoteException;
+
+    @BridgeVersion(1)
+    void onReceivedFloat(String key, float value) throws RemoteException;
+
+    @BridgeVersion(1)
+    void onReceivedDouble(String key, double value) throws RemoteException;
+
+    @BridgeVersion(1)
+    void onReceivedBoolean(String key, boolean value) throws RemoteException;
+
+    @BridgeVersion(1)
+    String getChannel() throws RemoteException;
 }
