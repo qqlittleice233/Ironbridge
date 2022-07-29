@@ -1,6 +1,7 @@
 package com.qqlittleice.ironbridge.xposed.hook
 
 import com.kaisar.xservicemanager.XServiceManager
+import com.qqlittleice.ironbridge.xposed.service.IronbridgeService
 import com.qqlittleice.ironbridge.xposed.utils.LogUtil
 
 object Android {
@@ -8,6 +9,8 @@ object Android {
     fun hook() {
         runCatching {
             XServiceManager.initForSystemServer()
+            XServiceManager.debug(true)
+            XServiceManager.addService("ironbridge_public", IronbridgeService())
         }.onFailure { LogUtil.xpe(it) }
     }
 
