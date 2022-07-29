@@ -20,13 +20,16 @@ class IronbridgeService: Ironbridge.Stub() {
         }.onFailure { LogUtil.xpe(it) }
     }
 
-    override fun sendString(tag: String, value: String) {
+    override fun sendString(channel: String, value: String) {
         runCatching {
             val iterator = mListeners.iterator()
             while (iterator.hasNext()) {
                 val next = iterator.next()
-                if (next.asBinder().pingBinder()) {
-                    next.onReceivedString(tag, value)
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (next.channel == channel) {
+                        next.onReceivedString(channel, value)
+                    }
                 } else {
                     LogUtil.xpw("One of the listeners is dead, remove it")
                     iterator.remove()
@@ -35,13 +38,16 @@ class IronbridgeService: Ironbridge.Stub() {
         }.onFailure { LogUtil.xpe(it) }
     }
 
-    override fun sendInt(tag: String, value: Int) {
+    override fun sendInt(channel: String, value: Int) {
         runCatching {
             val iterator = mListeners.iterator()
             while (iterator.hasNext()) {
                 val next = iterator.next()
-                if (next.asBinder().pingBinder()) {
-                    next.onReceivedInt(tag, value)
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (next.channel == channel) {
+                        next.onReceivedInt(channel, value)
+                    }
                 } else {
                     LogUtil.xpw("One of the listeners is dead, remove it")
                     iterator.remove()
@@ -50,13 +56,16 @@ class IronbridgeService: Ironbridge.Stub() {
         }.onFailure { LogUtil.xpe(it) }
     }
 
-    override fun sendLong(tag: String, value: Long) {
+    override fun sendLong(channel: String, value: Long) {
         runCatching {
             val iterator = mListeners.iterator()
             while (iterator.hasNext()) {
                 val next = iterator.next()
-                if (next.asBinder().pingBinder()) {
-                    next.onReceivedLong(tag, value)
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (next.channel == channel) {
+                        next.onReceivedLong(channel, value)
+                    }
                 } else {
                     LogUtil.xpw("One of the listeners is dead, remove it")
                     iterator.remove()
@@ -65,13 +74,16 @@ class IronbridgeService: Ironbridge.Stub() {
         }.onFailure { LogUtil.xpe(it) }
     }
 
-    override fun sendFloat(tag: String, value: Float) {
+    override fun sendFloat(channel: String, value: Float) {
         runCatching {
             val iterator = mListeners.iterator()
             while (iterator.hasNext()) {
                 val next = iterator.next()
-                if (next.asBinder().pingBinder()) {
-                    next.onReceivedFloat(tag, value)
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (next.channel == channel) {
+                        next.onReceivedFloat(channel, value)
+                    }
                 } else {
                     LogUtil.xpw("One of the listeners is dead, remove it")
                     iterator.remove()
@@ -80,13 +92,16 @@ class IronbridgeService: Ironbridge.Stub() {
         }.onFailure { LogUtil.xpe(it) }
     }
 
-    override fun sendDouble(tag: String, value: Double) {
+    override fun sendDouble(channel: String, value: Double) {
         runCatching {
             val iterator = mListeners.iterator()
             while (iterator.hasNext()) {
                 val next = iterator.next()
-                if (next.asBinder().pingBinder()) {
-                    next.onReceivedDouble(tag, value)
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (next.channel == channel) {
+                        next.onReceivedDouble(channel, value)
+                    }
                 } else {
                     LogUtil.xpw("One of the listeners is dead, remove it")
                     iterator.remove()
@@ -95,13 +110,16 @@ class IronbridgeService: Ironbridge.Stub() {
         }.onFailure { LogUtil.xpe(it) }
     }
 
-    override fun sendBoolean(tag: String, value: Boolean) {
+    override fun sendBoolean(channel: String, value: Boolean) {
         runCatching {
             val iterator = mListeners.iterator()
             while (iterator.hasNext()) {
                 val next = iterator.next()
-                if (next.asBinder().pingBinder()) {
-                    next.onReceivedBoolean(tag, value)
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (next.channel == channel) {
+                        next.onReceivedBoolean(channel, value)
+                    }
                 } else {
                     LogUtil.xpw("One of the listeners is dead, remove it")
                     iterator.remove()
