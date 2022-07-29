@@ -31,7 +31,7 @@ public interface Ironbridge extends IInterface {
 
     abstract class Stub extends Binder implements Ironbridge {
 
-        private static final String DESCRIPTOR = "com.qqlittleice.ironbridge.aidl.Ironbridge";
+        public static final String DESCRIPTOR = "com.qqlittleice.ironbridge.aidl.Ironbridge";
 
         static final int TRANSACTION_addListener = IBinder.FIRST_CALL_TRANSACTION;
         static final int TRANSACTION_removeListener = IBinder.FIRST_CALL_TRANSACTION + 1;
