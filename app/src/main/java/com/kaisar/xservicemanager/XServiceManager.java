@@ -206,9 +206,10 @@ public final class XServiceManager
     public static <T extends Binder> void registerService(String name, ServiceFetcher<T> serviceFetcher)
     {
         if(!isSystemServerProcess()) return;
+        String realName = "Ib_" + name;
         if(debug)
-            Log.d(TAG, String.format("register service %s %s", name, serviceFetcher));
-        SERVICE_FETCHERS.put(name, serviceFetcher);
+            Log.d(TAG, String.format("register service %s %s", realName, serviceFetcher));
+        SERVICE_FETCHERS.put(realName, serviceFetcher);
     }
 
     /**
@@ -222,8 +223,9 @@ public final class XServiceManager
     public static void addService(String name, IBinder service)
     {
         if(!isSystemServerProcess()) return;
-        if(debug) Log.d(TAG, String.format("add service %s %s", name, service));
-        sCache.put(name, service);
+        String realName = "Ib_" + name;
+        if(debug) Log.d(TAG, String.format("add service %s %s", realName, service));
+        sCache.put(realName, service);
     }
 
     /**
@@ -234,6 +236,7 @@ public final class XServiceManager
      */
     public static IBinder getService(String name)
     {
+        String realName = "Ib_" + name;
         try
         {
             @SuppressLint("PrivateApi") Class<?> ServiceManagerClass = Class.forName("android.os.ServiceManager");
@@ -245,7 +248,7 @@ public final class XServiceManager
             try
             {
                 _data.writeInterfaceToken(DESCRIPTOR);
-                _data.writeString(name);
+                _data.writeString(realName);
                 delegateService.transact(TRANSACTION_getService, _data, _reply, 0);
                 _reply.readException();
                 return _reply.readStrongBinder();
@@ -259,7 +262,7 @@ public final class XServiceManager
         catch(Exception e)
         {
             if(debug)
-                Log.e(TAG, String.format("get %s service error", name), e instanceof InvocationTargetException ? e.getCause() : e);
+                Log.e(TAG, String.format("get %s service error", realName), e instanceof InvocationTargetException ? e.getCause() : e);
             return null;
         }
     }

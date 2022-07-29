@@ -10,7 +10,7 @@ object Android {
         runCatching {
             XServiceManager.initForSystemServer()
             XServiceManager.debug(true)
-            XServiceManager.addService("ironbridge_public", IronbridgeService())
+            XServiceManager.addService("public", IronbridgeService())
         }.onFailure { LogUtil.xpe(it) }
     }
 
