@@ -35,7 +35,7 @@ public final class XServiceManager
     private static final Map<String, ServiceFetcher<? extends Binder>> SERVICE_FETCHERS = new ArrayMap<String, ServiceFetcher<? extends Binder>>();
     private static final HashMap<String, IBinder> sCache = new HashMap<String, IBinder>();
 
-    private static final String DESCRIPTOR = XServiceManager.class.getName();
+    private static final String DESCRIPTOR = "com.kaisar.xservicemanager.XServiceManager";
     private static final int TRANSACTION_getService = IBinder.LAST_CALL_TRANSACTION;
 
     private static boolean debug;
