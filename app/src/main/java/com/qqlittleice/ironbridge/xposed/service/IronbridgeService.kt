@@ -22,11 +22,14 @@ class IronbridgeService: Ironbridge.Stub() {
 
     override fun sendString(tag: String, value: String) {
         runCatching {
-            mListeners.forEach {
-                if (it.asBinder().isBinderAlive) {
-                    it.onReceivedString(tag, value)
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                if (next.asBinder().pingBinder()) {
+                    next.onReceivedString(tag, value)
                 } else {
-                    mListeners.remove(it)
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
                 }
             }
         }.onFailure { LogUtil.xpe(it) }
@@ -34,11 +37,14 @@ class IronbridgeService: Ironbridge.Stub() {
 
     override fun sendInt(tag: String, value: Int) {
         runCatching {
-            mListeners.forEach {
-                if (it.asBinder().isBinderAlive) {
-                    it.onReceivedInt(tag, value)
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                if (next.asBinder().pingBinder()) {
+                    next.onReceivedInt(tag, value)
                 } else {
-                    mListeners.remove(it)
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
                 }
             }
         }.onFailure { LogUtil.xpe(it) }
@@ -46,11 +52,14 @@ class IronbridgeService: Ironbridge.Stub() {
 
     override fun sendLong(tag: String, value: Long) {
         runCatching {
-            mListeners.forEach {
-                if (it.asBinder().isBinderAlive) {
-                    it.onReceivedLong(tag, value)
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                if (next.asBinder().pingBinder()) {
+                    next.onReceivedLong(tag, value)
                 } else {
-                    mListeners.remove(it)
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
                 }
             }
         }.onFailure { LogUtil.xpe(it) }
@@ -58,11 +67,14 @@ class IronbridgeService: Ironbridge.Stub() {
 
     override fun sendFloat(tag: String, value: Float) {
         runCatching {
-            mListeners.forEach {
-                if (it.asBinder().isBinderAlive) {
-                    it.onReceivedFloat(tag, value)
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                if (next.asBinder().pingBinder()) {
+                    next.onReceivedFloat(tag, value)
                 } else {
-                    mListeners.remove(it)
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
                 }
             }
         }.onFailure { LogUtil.xpe(it) }
@@ -70,11 +82,14 @@ class IronbridgeService: Ironbridge.Stub() {
 
     override fun sendDouble(tag: String, value: Double) {
         runCatching {
-            mListeners.forEach {
-                if (it.asBinder().isBinderAlive) {
-                    it.onReceivedDouble(tag, value)
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                if (next.asBinder().pingBinder()) {
+                    next.onReceivedDouble(tag, value)
                 } else {
-                    mListeners.remove(it)
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
                 }
             }
         }.onFailure { LogUtil.xpe(it) }
@@ -82,11 +97,14 @@ class IronbridgeService: Ironbridge.Stub() {
 
     override fun sendBoolean(tag: String, value: Boolean) {
         runCatching {
-            mListeners.forEach {
-                if (it.asBinder().isBinderAlive) {
-                    it.onReceivedBoolean(tag, value)
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                if (next.asBinder().pingBinder()) {
+                    next.onReceivedBoolean(tag, value)
                 } else {
-                    mListeners.remove(it)
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
                 }
             }
         }.onFailure { LogUtil.xpe(it) }
