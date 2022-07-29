@@ -18,6 +18,13 @@ public class IronBridge {
 
     private static final String TAG = "XServiceManager";
 
+    /**
+     * Get the bridge by given name.
+     * <p>
+     * @param name The name of the bridge.
+     * <p>
+     * @return {@link Ironbridge}
+     */
     @BridgeVersion(1)
     @Nullable
     public static Ironbridge getBridge(String name) {
@@ -50,7 +57,13 @@ public class IronBridge {
         }
     }
 
+    /**
+     * Get the public bridge.
+     * <p>
+     * @return {@link Ironbridge}
+     */
     @BridgeVersion(1)
+    @Nullable
     public static Ironbridge getPublicBridge() {
         return getBridge("public");
     }

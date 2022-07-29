@@ -10,6 +10,11 @@ import androidx.annotation.Keep;
 
 import com.qqlittleice.ironbridge.api.annotation.BridgeVersion;
 
+/**
+ * A listener for {@link Ironbridge}.
+ * <p>
+ * This listener is used to receive the content sent by other client.
+ * */
 @Keep
 public interface BridgeListener extends IInterface {
 

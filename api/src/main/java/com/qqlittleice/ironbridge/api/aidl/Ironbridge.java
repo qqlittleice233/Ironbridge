@@ -10,6 +10,9 @@ import androidx.annotation.Keep;
 
 import com.qqlittleice.ironbridge.api.annotation.BridgeVersion;
 
+/**
+ * The bridge for sending and receiving data.
+ * */
 @Keep
 public interface Ironbridge extends IInterface {
 
