@@ -13,17 +13,17 @@ public interface BridgeListener extends IInterface {
 
     class Default implements BridgeListener {
         @Override
-        public void onReceivedString(String tag, String value) {}
+        public void onReceivedString(String channel, String value) {}
         @Override
-        public void onReceivedInt(String tag, int value) {}
+        public void onReceivedInt(String channel, int value) {}
         @Override
-        public void onReceivedLong(String tag, long value) {}
+        public void onReceivedLong(String channel, long value) {}
         @Override
-        public void onReceivedFloat(String tag, float value) {}
+        public void onReceivedFloat(String channel, float value) {}
         @Override
-        public void onReceivedDouble(String tag, double value) {}
+        public void onReceivedDouble(String channel, double value) {}
         @Override
-        public void onReceivedBoolean(String tag, boolean value) {}
+        public void onReceivedBoolean(String channel, boolean value) {}
         @Override
         public String getChannel() { return null; }
         @Override
@@ -72,44 +72,44 @@ public interface BridgeListener extends IInterface {
                 }
                 case TRANSACTION_onReceivedString: {
                     data.enforceInterface(descriptor);
-                    String tag = data.readString();
+                    String channel = data.readString();
                     String value = data.readString();
-                    onReceivedString(tag, value);
+                    onReceivedString(channel, value);
                     return true;
                 }
                 case TRANSACTION_onReceivedInt: {
                     data.enforceInterface(descriptor);
-                    String tag = data.readString();
+                    String channel = data.readString();
                     int value = data.readInt();
-                    onReceivedInt(tag, value);
+                    onReceivedInt(channel, value);
                     return true;
                 }
                 case TRANSACTION_onReceivedLong: {
                     data.enforceInterface(descriptor);
-                    String tag = data.readString();
+                    String channel = data.readString();
                     long value = data.readLong();
-                    onReceivedLong(tag, value);
+                    onReceivedLong(channel, value);
                     return true;
                 }
                 case TRANSACTION_onReceivedFloat: {
                     data.enforceInterface(descriptor);
-                    String tag = data.readString();
+                    String channel = data.readString();
                     float value = data.readFloat();
-                    onReceivedFloat(tag, value);
+                    onReceivedFloat(channel, value);
                     return true;
                 }
                 case TRANSACTION_onReceivedDouble: {
                     data.enforceInterface(descriptor);
-                    String tag = data.readString();
+                    String channel = data.readString();
                     double value = data.readDouble();
-                    onReceivedDouble(tag, value);
+                    onReceivedDouble(channel, value);
                     return true;
                 }
                 case TRANSACTION_onReceivedBoolean: {
                     data.enforceInterface(descriptor);
-                    String tag = data.readString();
+                    String channel = data.readString();
                     boolean value = data.readInt() != 0;
-                    onReceivedBoolean(tag, value);
+                    onReceivedBoolean(channel, value);
                     return true;
                 }
                 case TRANSACTION_getChannel: {
@@ -159,15 +159,15 @@ public interface BridgeListener extends IInterface {
             }
 
             @Override
-            public void onReceivedString(String tag, String value) throws RemoteException {
+            public void onReceivedString(String channel, String value) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
-                    _data.writeString(tag);
+                    _data.writeString(channel);
                     _data.writeString(value);
                     boolean _status = mRemote.transact(TRANSACTION_onReceivedString, _data, null, IBinder.FLAG_ONEWAY);
                     if (!_status && getDefaultImpl() != null) {
-                        getDefaultImpl().onReceivedString(tag, value);
+                        getDefaultImpl().onReceivedString(channel, value);
                     }
                 } finally {
                     _data.recycle();
@@ -175,15 +175,15 @@ public interface BridgeListener extends IInterface {
             }
 
             @Override
-            public void onReceivedInt(String tag, int value) throws RemoteException {
+            public void onReceivedInt(String channel, int value) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
-                    _data.writeString(tag);
+                    _data.writeString(channel);
                     _data.writeInt(value);
                     boolean _status = mRemote.transact(Stub.TRANSACTION_onReceivedInt, _data, null, IBinder.FLAG_ONEWAY);
                     if (!_status && getDefaultImpl() != null) {
-                        getDefaultImpl().onReceivedInt(tag, value);
+                        getDefaultImpl().onReceivedInt(channel, value);
                     }
                 } finally {
                     _data.recycle();
@@ -191,15 +191,15 @@ public interface BridgeListener extends IInterface {
             }
 
             @Override
-            public void onReceivedLong(String tag, long value) throws RemoteException {
+            public void onReceivedLong(String channel, long value) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
-                    _data.writeString(tag);
+                    _data.writeString(channel);
                     _data.writeLong(value);
                     boolean _status = mRemote.transact(Stub.TRANSACTION_onReceivedLong, _data, null, IBinder.FLAG_ONEWAY);
                     if (!_status && getDefaultImpl() != null) {
-                        getDefaultImpl().onReceivedLong(tag, value);
+                        getDefaultImpl().onReceivedLong(channel, value);
                     }
                 } finally {
                     _data.recycle();
@@ -207,15 +207,15 @@ public interface BridgeListener extends IInterface {
             }
 
             @Override
-            public void onReceivedFloat(String tag, float value) throws RemoteException {
+            public void onReceivedFloat(String channel, float value) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
-                    _data.writeString(tag);
+                    _data.writeString(channel);
                     _data.writeFloat(value);
                     boolean _status = mRemote.transact(Stub.TRANSACTION_onReceivedFloat, _data, null, IBinder.FLAG_ONEWAY);
                     if (!_status && getDefaultImpl() != null) {
-                        getDefaultImpl().onReceivedFloat(tag, value);
+                        getDefaultImpl().onReceivedFloat(channel, value);
                     }
                 } finally {
                     _data.recycle();
@@ -223,15 +223,15 @@ public interface BridgeListener extends IInterface {
             }
 
             @Override
-            public void onReceivedDouble(String tag, double value) throws RemoteException {
+            public void onReceivedDouble(String channel, double value) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
-                    _data.writeString(tag);
+                    _data.writeString(channel);
                     _data.writeDouble(value);
                     boolean _status = mRemote.transact(Stub.TRANSACTION_onReceivedDouble, _data, null, IBinder.FLAG_ONEWAY);
                     if (!_status && getDefaultImpl() != null) {
-                        getDefaultImpl().onReceivedDouble(tag, value);
+                        getDefaultImpl().onReceivedDouble(channel, value);
                     }
                 } finally {
                     _data.recycle();
@@ -239,15 +239,15 @@ public interface BridgeListener extends IInterface {
             }
 
             @Override
-            public void onReceivedBoolean(String tag, boolean value) throws RemoteException {
+            public void onReceivedBoolean(String channel, boolean value) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
-                    _data.writeString(tag);
+                    _data.writeString(channel);
                     _data.writeInt(value ? 1 : 0);
                     boolean _status = mRemote.transact(Stub.TRANSACTION_onReceivedBoolean, _data, null, IBinder.FLAG_ONEWAY);
                     if (!_status && getDefaultImpl() != null) {
-                        getDefaultImpl().onReceivedBoolean(tag, value);
+                        getDefaultImpl().onReceivedBoolean(channel, value);
                     }
                 } finally {
                     _data.recycle();
@@ -276,12 +276,12 @@ public interface BridgeListener extends IInterface {
         }
     }
 
-    void onReceivedString(java.lang.String tag, java.lang.String value) throws android.os.RemoteException;
-    void onReceivedInt(java.lang.String tag, int value) throws android.os.RemoteException;
-    void onReceivedLong(java.lang.String tag, long value) throws android.os.RemoteException;
-    void onReceivedFloat(java.lang.String tag, float value) throws android.os.RemoteException;
-    void onReceivedDouble(java.lang.String tag, double value) throws android.os.RemoteException;
-    void onReceivedBoolean(java.lang.String tag, boolean value) throws android.os.RemoteException;
+    void onReceivedString(String channel, String value) throws android.os.RemoteException;
+    void onReceivedInt(String channel, int value) throws android.os.RemoteException;
+    void onReceivedLong(String channel, long value) throws android.os.RemoteException;
+    void onReceivedFloat(String channel, float value) throws android.os.RemoteException;
+    void onReceivedDouble(String channel, double value) throws android.os.RemoteException;
+    void onReceivedBoolean(String channel, boolean value) throws android.os.RemoteException;
 
     String getChannel() throws android.os.RemoteException;
 }
