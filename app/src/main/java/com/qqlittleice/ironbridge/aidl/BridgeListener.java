@@ -34,13 +34,13 @@ public interface BridgeListener extends IInterface {
 
         private static final String DESCRIPTOR = "com.qqlittleice.ironbridge.aidl.BridgeListener";
 
-        static final int TRANSACTION_onReceivedString = IBinder.FIRST_CALL_TRANSACTION;
-        static final int TRANSACTION_onReceivedInt = IBinder.FIRST_CALL_TRANSACTION + 1;
-        static final int TRANSACTION_onReceivedLong = IBinder.FIRST_CALL_TRANSACTION + 2;
-        static final int TRANSACTION_onReceivedFloat = IBinder.FIRST_CALL_TRANSACTION + 3;
-        static final int TRANSACTION_onReceivedDouble = IBinder.FIRST_CALL_TRANSACTION + 4;
-        static final int TRANSACTION_onReceivedBoolean = IBinder.FIRST_CALL_TRANSACTION + 5;
-        static final int TRANSACTION_getChannel = IBinder.FIRST_CALL_TRANSACTION + 6;
+        static final int TRANSACTION_getChannel = IBinder.FIRST_CALL_TRANSACTION;
+        static final int TRANSACTION_onReceivedString = IBinder.FIRST_CALL_TRANSACTION + 1;
+        static final int TRANSACTION_onReceivedInt = IBinder.FIRST_CALL_TRANSACTION + 2;
+        static final int TRANSACTION_onReceivedLong = IBinder.FIRST_CALL_TRANSACTION + 3;
+        static final int TRANSACTION_onReceivedFloat = IBinder.FIRST_CALL_TRANSACTION + 4;
+        static final int TRANSACTION_onReceivedDouble = IBinder.FIRST_CALL_TRANSACTION + 5;
+        static final int TRANSACTION_onReceivedBoolean = IBinder.FIRST_CALL_TRANSACTION + 6;
 
         public Stub() {
             attachInterface(this, DESCRIPTOR);
