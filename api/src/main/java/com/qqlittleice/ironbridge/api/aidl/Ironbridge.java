@@ -59,7 +59,7 @@ public interface Ironbridge extends IInterface {
         @Override
         public void sendSerializable(String channel, String key, Serializable value) {}
         @Override
-        public void sendIBinder(String channel, String key, IBinder value) throws RemoteException {}
+        public void sendIBinder(String channel, String key, IBinder value) {}
 
         @Override
         public IBinder asBinder() { return null; }
