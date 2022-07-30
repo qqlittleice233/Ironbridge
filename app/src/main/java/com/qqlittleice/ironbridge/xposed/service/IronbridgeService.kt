@@ -155,6 +155,138 @@ class IronbridgeService: Ironbridge.Stub() {
         }.onFailure { LogUtil.xpe(it) }
     }
 
+    override fun sendStringList(channel: String?, key: String?, value: MutableList<String>?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedStringList(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
+    override fun sendIntList(channel: String?, key: String?, value: MutableList<Int>?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedIntList(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
+    override fun sendLongList(channel: String?, key: String?, value: MutableList<Long>?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedLongList(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
+    override fun sendFloatList(channel: String?, key: String?, value: MutableList<Float>?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedFloatList(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
+    override fun sendDoubleList(channel: String?, key: String?, value: MutableList<Double>?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedDoubleList(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
+    override fun sendBooleanList(channel: String?, key: String?, value: MutableList<Boolean>?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedBooleanList(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
     private fun getBridgeListenerVersion(binder: IBinder): Int {
         val data = Parcel.obtain()
         val reply = Parcel.obtain()
