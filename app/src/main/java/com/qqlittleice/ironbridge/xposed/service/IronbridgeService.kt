@@ -333,6 +333,28 @@ class IronbridgeService: Ironbridge.Stub() {
         }.onFailure { LogUtil.xpe(it) }
     }
 
+    override fun sendIBinder(channel: String?, key: String?, value: IBinder?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedIBinder(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
     private fun getBridgeListenerVersion(binder: IBinder): Int {
         val data = Parcel.obtain()
         val reply = Parcel.obtain()
