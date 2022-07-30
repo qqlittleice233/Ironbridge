@@ -1,5 +1,8 @@
 package com.qqlittleice.ironbridge.xposed.service
 
+import android.os.IBinder
+import android.os.Parcel
+import android.util.Log
 import com.qqlittleice.ironbridge.api.aidl.BridgeListener
 import com.qqlittleice.ironbridge.api.aidl.Ironbridge
 import com.qqlittleice.ironbridge.xposed.utils.LogUtil
@@ -27,6 +30,10 @@ class IronbridgeService: Ironbridge.Stub() {
                 val next = iterator.next()
                 val binder = next.asBinder()
                 if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
                     if (next.channel == channel) {
                         next.onReceivedString(key, value)
                     }
@@ -45,6 +52,10 @@ class IronbridgeService: Ironbridge.Stub() {
                 val next = iterator.next()
                 val binder = next.asBinder()
                 if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
                     if (next.channel == channel) {
                         next.onReceivedInt(key, value)
                     }
@@ -63,6 +74,10 @@ class IronbridgeService: Ironbridge.Stub() {
                 val next = iterator.next()
                 val binder = next.asBinder()
                 if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
                     if (next.channel == channel) {
                         next.onReceivedLong(key, value)
                     }
@@ -81,6 +96,10 @@ class IronbridgeService: Ironbridge.Stub() {
                 val next = iterator.next()
                 val binder = next.asBinder()
                 if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
                     if (next.channel == channel) {
                         next.onReceivedFloat(key, value)
                     }
@@ -99,6 +118,10 @@ class IronbridgeService: Ironbridge.Stub() {
                 val next = iterator.next()
                 val binder = next.asBinder()
                 if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
                     if (next.channel == channel) {
                         next.onReceivedDouble(key, value)
                     }
@@ -117,6 +140,10 @@ class IronbridgeService: Ironbridge.Stub() {
                 val next = iterator.next()
                 val binder = next.asBinder()
                 if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
                     if (next.channel == channel) {
                         next.onReceivedBoolean(key, value)
                     }
@@ -128,5 +155,26 @@ class IronbridgeService: Ironbridge.Stub() {
         }.onFailure { LogUtil.xpe(it) }
     }
 
+    private fun getBridgeListenerVersion(binder: IBinder): Int {
+        val data = Parcel.obtain()
+        val reply = Parcel.obtain()
+        try {
+            data.writeInterfaceToken(BridgeListener.Stub.DESCRIPTOR)
+            val status = binder.transact(BridgeListener.Stub.TRANSACTION_API, data, reply, 0)
+            if (!status) {
+                Log.d("IronBridge", "get remote api version failed")
+                return 0
+            }
+            reply.readException()
+            return reply.readInt()
+        } finally {
+            data.recycle()
+            reply.recycle()
+        }
+    }
+
+    private fun IBinder.checkBridgeListenerVersion(requireApi: Int): Boolean {
+        return getBridgeListenerVersion(this) >= requireApi
+    }
 
 }
