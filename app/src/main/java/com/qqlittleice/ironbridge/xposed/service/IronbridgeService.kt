@@ -289,6 +289,138 @@ class IronbridgeService: Ironbridge.Stub() {
         }.onFailure { LogUtil.xpe(it) }
     }
 
+    override fun sendStringArray(channel: String?, key: String?, value: Array<out String>?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedStringArray(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
+    override fun sendIntArray(channel: String?, key: String?, value: IntArray?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedIntArray(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
+    override fun sendLongArray(channel: String?, key: String?, value: LongArray?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedLongArray(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
+    override fun sendFloatArray(channel: String?, key: String?, value: FloatArray?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedFloatArray(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
+    override fun sendDoubleArray(channel: String?, key: String?, value: DoubleArray?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedDoubleArray(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
+    override fun sendBooleanArray(channel: String?, key: String?, value: BooleanArray?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedBooleanArray(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
     override fun sendParcelable(channel: String?, key: String?, value: Parcelable?) {
         runCatching {
             val iterator = mListeners.iterator()
