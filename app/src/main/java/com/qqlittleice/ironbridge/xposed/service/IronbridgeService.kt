@@ -2,6 +2,7 @@ package com.qqlittleice.ironbridge.xposed.service
 
 import android.os.IBinder
 import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import com.qqlittleice.ironbridge.api.aidl.BridgeListener
 import com.qqlittleice.ironbridge.api.aidl.Ironbridge
@@ -278,6 +279,28 @@ class IronbridgeService: Ironbridge.Stub() {
                     }
                     if (next.channel == channel) {
                         next.onReceivedBooleanList(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
+    override fun sendParcelable(channel: String?, key: String?, value: Parcelable?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedParcelable(key, value)
                     }
                 } else {
                     LogUtil.xpw("One of the listeners is dead, remove it")
