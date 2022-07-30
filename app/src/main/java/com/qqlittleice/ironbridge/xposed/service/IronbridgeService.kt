@@ -7,6 +7,7 @@ import android.util.Log
 import com.qqlittleice.ironbridge.api.aidl.BridgeListener
 import com.qqlittleice.ironbridge.api.aidl.Ironbridge
 import com.qqlittleice.ironbridge.xposed.utils.LogUtil
+import java.io.Serializable
 
 class IronbridgeService: Ironbridge.Stub() {
 
@@ -301,6 +302,28 @@ class IronbridgeService: Ironbridge.Stub() {
                     }
                     if (next.channel == channel) {
                         next.onReceivedParcelable(key, value)
+                    }
+                } else {
+                    LogUtil.xpw("One of the listeners is dead, remove it")
+                    iterator.remove()
+                }
+            }
+        }.onFailure { LogUtil.xpe(it) }
+    }
+
+    override fun sendSerializable(channel: String?, key: String?, value: Serializable?) {
+        runCatching {
+            val iterator = mListeners.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                val binder = next.asBinder()
+                if (binder.pingBinder()) {
+                    if (!binder.checkBridgeListenerVersion(1)) {
+                        Log.d("IronBridge", "remote listener api version is too low, require 1")
+                        continue
+                    }
+                    if (next.channel == channel) {
+                        next.onReceivedSerializable(key, value)
                     }
                 } else {
                     LogUtil.xpw("One of the listeners is dead, remove it")
