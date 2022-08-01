@@ -31,10 +31,10 @@ public interface ISharePreferenceCallback extends IInterface {
                 return null;
             }
             IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
-            if (iin == null || !(iin instanceof ISharePreferenceCallback)) {
-                return new Proxy(obj);
+            if (iin instanceof ISharePreferenceCallback) {
+                return (ISharePreferenceCallback) iin;
             }
-            return (ISharePreferenceCallback) iin;
+            return new Proxy(obj);
         }
 
         @Override

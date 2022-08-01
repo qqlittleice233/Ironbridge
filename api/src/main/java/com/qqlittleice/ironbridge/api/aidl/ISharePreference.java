@@ -246,7 +246,7 @@ public interface ISharePreference extends IInterface {
                     _data.writeInterfaceToken(DESCRIPTOR);
                     boolean _status = mRemote.transact(TRANSACTION_API, _data, _reply, 0);
                     if (!_status) {
-                        Log.d("IronBridge-ISharePreference", "get remote api version failed");
+                        Log.d("IronBridge-ISharePreference", "transact failed");
                         return 0;
                     }
                     _reply.readException();
