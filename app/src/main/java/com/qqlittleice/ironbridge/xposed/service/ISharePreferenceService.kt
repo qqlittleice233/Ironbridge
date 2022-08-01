@@ -1,5 +1,6 @@
 package com.qqlittleice.ironbridge.xposed.service
 
+import android.app.AndroidAppHelper
 import android.os.Binder
 import com.qqlittleice.ironbridge.api.aidl.ISharePreference
 import com.qqlittleice.ironbridge.api.aidl.ISharePreferenceCallback
@@ -11,26 +12,33 @@ import java.io.File
 class ISharePreferenceService(name: String) : ISharePreference.Stub() {
     private val callbacks = mutableListOf<ISharePreferenceCallback>()
     private val kvStore = FastKV.Builder(File(SystemServerDirUtils.baseServerDir(), "FastKV").absolutePath, name).build()
-    private val blackList = arrayListOf("__createUid__", "__scope__")
+    private val scopeKey = "__Scope__"
+    private val createPackNameKey = "__CreatePackName__"
+    private val blackList = arrayListOf(createPackNameKey, scopeKey)
 
-    fun setCreateUid(uid: Int) {
-        kvStore.putInt("__createUid__", uid)
+    fun setCreatePackName(packName: String) {
+        kvStore.putString(createPackNameKey, packName)
     }
 
-    fun getCreateUid(): Int {
-        return kvStore.getInt("__createUid__")
+    fun getCreatePackName(): String {
+        return kvStore.getString(createPackNameKey)
+    }
+
+    private fun checkPermission(): Boolean {
+        val aList = AndroidAppHelper.currentApplication().applicationContext.packageManager.getPackagesForUid(Binder.getCallingUid()) ?: return false
+        return aList.contains(getCreatePackName())
     }
 
     fun getScope(): List<String> {
-        return kvStore.getStringSet("__scope__")?.toList() ?: arrayListOf()
+        return kvStore.getStringSet(scopeKey)?.toList() ?: arrayListOf()
     }
 
     override fun setScope(scope: Array<String>) {
-        if (Binder.getCallingUid() != kvStore.getInt("__createUid__")) {
-            LogUtil.e("setScope", Binder.getCallingUid().toString() + ": setScope failed, permission denied")
+        if (!checkPermission()) {
+            LogUtil.e(Binder.getCallingUid().toString() + ": setScope failed, permission denied")
             throw SecurityException("Only the creator can set scope")
         }
-        kvStore.putStringSet("__scope__", scope.toSet())
+        kvStore.putStringSet(scopeKey, scope.toSet())
     }
 
     override fun addCallback(callback: ISharePreferenceCallback) {

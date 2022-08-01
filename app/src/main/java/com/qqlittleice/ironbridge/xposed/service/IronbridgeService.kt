@@ -520,11 +520,11 @@ class IronbridgeService: Ironbridge.Stub() {
             mKVMap[channel] = result
         }
         if (result != null) {
-            if (Binder.getCallingUid() == result.getCreateUid()) {
+            val appList = AndroidAppHelper.currentApplication().applicationContext.packageManager.getPackagesForUid(Binder.getCallingUid()) ?: return null
+            if (appList.contains(result.getCreatePackName())) {
                 return result
             }
-            val pList = AndroidAppHelper.currentApplication().applicationContext.packageManager.getPackagesForUid(Binder.getCallingUid()) ?: return null
-            for (pName in pList) {
+            for (pName in appList) {
                 if (result.getScope().contains(pName)) {
                     return result
                 }
@@ -539,7 +539,8 @@ class IronbridgeService: Ironbridge.Stub() {
             throw IllegalArgumentException("SharePreference already exists: $channel")
         }
         val sp = ISharePreferenceService(channel)
-        sp.setCreateUid(Binder.getCallingUid())
+        val packName = AndroidAppHelper.currentApplication().applicationContext.packageManager.getPackagesForUid(Binder.getCallingUid())?.get(0) ?: throw NullPointerException("Get package name failed")
+        sp.setCreatePackName(packName)
         mKVMap[channel] = sp
         mKV.putStringSet("SPList", mKVMap.keys)
         return sp
