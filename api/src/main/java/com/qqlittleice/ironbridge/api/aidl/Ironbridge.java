@@ -986,8 +986,8 @@ public interface Ironbridge extends IInterface {
     @BridgeVersion(1)
     void sendIBinder(String channel, String key, IBinder value) throws RemoteException;
 
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     ISharePreference getSharePreference(String channel) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     ISharePreference createSharePreference(String channel) throws RemoteException;
 }

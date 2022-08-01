@@ -17,7 +17,7 @@ public interface ISharePreference extends IInterface {
     @Keep
     abstract class Stub extends Binder implements ISharePreference {
         private static final String DESCRIPTOR = "com.qqlittleice.ironbridge.api.aidl.ISharePreference";
-        private static final int api = 1;
+        private static final int api = 2;
 
         static final int TRANSACTION_addCallback = IBinder.FIRST_CALL_TRANSACTION;
         static final int TRANSACTION_removeCallback = IBinder.FIRST_CALL_TRANSACTION + 1;
@@ -256,8 +256,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public void setScope(String[] scope) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return;
                 }
                 Parcel _data = Parcel.obtain();
@@ -275,8 +275,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public void addCallback(ISharePreferenceCallback callback) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return;
                 }
                 Parcel _data = Parcel.obtain();
@@ -294,8 +294,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public void removeCallback(ISharePreferenceCallback callback) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return;
                 }
                 Parcel _data = Parcel.obtain();
@@ -313,8 +313,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public void setString(String key, String value) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return;
                 }
                 Parcel _data = Parcel.obtain();
@@ -333,8 +333,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public void setStringArray(String key, String[] values) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return;
                 }
                 Parcel _data = Parcel.obtain();
@@ -353,8 +353,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public void setInt(String key, int value) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return;
                 }
                 Parcel _data = Parcel.obtain();
@@ -373,8 +373,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public void setDouble(String key, double value) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return;
                 }
                 Parcel _data = Parcel.obtain();
@@ -393,8 +393,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public void setLong(String key, long value) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return;
                 }
                 Parcel _data = Parcel.obtain();
@@ -413,8 +413,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public void setFloat(String key, float value) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return;
                 }
                 Parcel _data = Parcel.obtain();
@@ -433,8 +433,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public void setBoolean(String key, boolean value) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return;
                 }
                 Parcel _data = Parcel.obtain();
@@ -453,8 +453,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public String getString(String key, String defValue) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return null;
                 }
                 Parcel _data = Parcel.obtain();
@@ -474,8 +474,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public String[] getStringArray(String key, String[] defValue) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return null;
                 }
                 Parcel _data = Parcel.obtain();
@@ -495,8 +495,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public int getInt(String key, int defValue) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return Integer.MAX_VALUE;
                 }
                 Parcel _data = Parcel.obtain();
@@ -516,8 +516,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public double getDouble(String key, double defValue) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return Double.MAX_VALUE;
                 }
                 Parcel _data = Parcel.obtain();
@@ -537,8 +537,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public long getLong(String key, long defValue) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return Long.MAX_VALUE;
                 }
                 Parcel _data = Parcel.obtain();
@@ -558,8 +558,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public float getFloat(String key, float defValue) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return Float.MAX_VALUE;
                 }
                 float _result;
@@ -580,8 +580,8 @@ public interface ISharePreference extends IInterface {
 
             @Override
             public boolean getBoolean(String key, boolean defValue) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return false;
                 }
                 Parcel _data = Parcel.obtain();
@@ -601,41 +601,41 @@ public interface ISharePreference extends IInterface {
         }
     }
 
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     void setScope(String[] scope) throws RemoteException;
 
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     void addCallback(ISharePreferenceCallback callback) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     void removeCallback(ISharePreferenceCallback callback) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     void setString(String key, String value) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     void setStringArray(String key, String[] values) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     void setInt(String key, int value) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     void setDouble(String key, double value) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     void setLong(String key, long value) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     void setFloat(String key, float value) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     void setBoolean(String key, boolean value) throws RemoteException;
 
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     String getString(String key, String defValue) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     String[] getStringArray(String key, String[] defValue) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     int getInt(String key, int defValue) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     double getDouble(String key, double defValue) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     long getLong(String key, long defValue) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     float getFloat(String key, float defValue) throws RemoteException;
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     boolean getBoolean(String key, boolean defValue) throws RemoteException;
 
 }

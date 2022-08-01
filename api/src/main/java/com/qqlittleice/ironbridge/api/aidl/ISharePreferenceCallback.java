@@ -16,18 +16,9 @@ import com.qqlittleice.ironbridge.api.annotation.BridgeVersion;
 public interface ISharePreferenceCallback extends IInterface {
 
     @Keep
-    class Default implements ISharePreferenceCallback {
-        @Override
-        public void onSharePreferenceChanged(String key, Object value) throws RemoteException {}
-
-        @Override
-        public IBinder asBinder() { return null; }
-    }
-
-    @Keep
     abstract class Stub extends Binder implements ISharePreferenceCallback {
         public static final String DESCRIPTOR = "com.qqlittleice.ironbridge.api.aidl.ISharePreferenceCallback";
-        public static final int api = 1;
+        public static final int api = 2;
 
         static final int TRANSACTION_onSharePreferenceChanged = IBinder.FIRST_CALL_TRANSACTION;
 
@@ -149,6 +140,6 @@ public interface ISharePreferenceCallback extends IInterface {
         }
     }
 
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     void onSharePreferenceChanged(String key, Object value) throws RemoteException;
 }
