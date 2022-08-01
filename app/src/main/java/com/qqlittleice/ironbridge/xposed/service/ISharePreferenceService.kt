@@ -17,6 +17,10 @@ class ISharePreferenceService(name: String) : ISharePreference.Stub() {
         kvStore.putInt("__createUid__", uid)
     }
 
+    fun getCreateUid(): Int {
+        return kvStore.getInt("__createUid__")
+    }
+
     fun getScope(): List<String> {
         return kvStore.getStringSet("__scope__")?.toList() ?: arrayListOf()
     }

@@ -520,6 +520,9 @@ class IronbridgeService: Ironbridge.Stub() {
             mKVMap[channel] = result
         }
         if (result != null) {
+            if (Binder.getCallingUid() == result.getCreateUid()) {
+                return result
+            }
             val pList = AndroidAppHelper.currentApplication().applicationContext.packageManager.getPackagesForUid(Binder.getCallingUid()) ?: return null
             for (pName in pList) {
                 if (result.getScope().contains(pName)) {
