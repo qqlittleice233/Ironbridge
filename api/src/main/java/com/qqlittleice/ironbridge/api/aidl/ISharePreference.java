@@ -4,6 +4,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.IInterface;
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -67,6 +68,13 @@ public interface ISharePreference extends IInterface {
                     data.enforceInterface(descriptor);
                     ISharePreferenceCallback callback = ISharePreferenceCallback.Stub.asInterface(data.readStrongBinder());
                     addCallback(callback);
+                    reply.writeNoException();
+                    return true;
+                }
+                case TRANSACTION_removeCallback: {
+                    data.enforceInterface(descriptor);
+                    ISharePreferenceCallback callback = ISharePreferenceCallback.Stub.asInterface(data.readStrongBinder());
+                    removeCallback(callback);
                     reply.writeNoException();
                     return true;
                 }
@@ -261,14 +269,17 @@ public interface ISharePreference extends IInterface {
                     return;
                 }
                 Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
                     _data.writeStringArray(scope);
-                    boolean _status = mRemote.transact(TRANSACTION_addCallback, _data, null, 0);
+                    boolean _status = mRemote.transact(TRANSACTION_setScope, _data, _reply, 0);
+                    _reply.readException();
                     if (!_status && getDefaultImpl() != null) {
                         getDefaultImpl().setScope(scope);
                     }
                 } finally {
+                    _reply.recycle();
                     _data.recycle();
                 }
             }
@@ -280,14 +291,17 @@ public interface ISharePreference extends IInterface {
                     return;
                 }
                 Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
                     _data.writeStrongBinder(callback != null ? callback.asBinder() : null);
-                   boolean _status = mRemote.transact(TRANSACTION_addCallback, _data, null, 0);
+                   boolean _status = mRemote.transact(TRANSACTION_addCallback, _data, _reply, IBinder.FLAG_ONEWAY);
+                   _reply.readException();
                     if (!_status && getDefaultImpl() != null) {
                         getDefaultImpl().addCallback(callback);
                     }
                 } finally {
+                    _reply.recycle();
                     _data.recycle();
                 }
             }
@@ -299,14 +313,17 @@ public interface ISharePreference extends IInterface {
                     return;
                 }
                 Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
                     _data.writeStrongBinder(callback != null ? callback.asBinder() : null);
-                    boolean _status = mRemote.transact(TRANSACTION_removeCallback, _data, null, 0);
+                    boolean _status = mRemote.transact(TRANSACTION_removeCallback, _data, _reply, IBinder.FLAG_ONEWAY);
+                    _reply.readException();
                     if (!_status && getDefaultImpl() != null) {
                         getDefaultImpl().removeCallback(callback);
                     }
                 } finally {
+                    _reply.recycle();
                     _data.recycle();
                 }
             }
@@ -318,15 +335,18 @@ public interface ISharePreference extends IInterface {
                     return;
                 }
                 Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
                     _data.writeString(key);
                     _data.writeString(value);
-                    boolean _status = mRemote.transact(TRANSACTION_setString, _data, null, IBinder.FLAG_ONEWAY);
+                    boolean _status = mRemote.transact(TRANSACTION_setString, _data, _reply, IBinder.FLAG_ONEWAY);
+                    _reply.readException();
                     if (!_status && getDefaultImpl() != null) {
                         getDefaultImpl().setString(key, value);
                     }
                 } finally {
+                    _reply.recycle();
                     _data.recycle();
                 }
             }
@@ -338,15 +358,18 @@ public interface ISharePreference extends IInterface {
                     return;
                 }
                 Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
                     _data.writeString(key);
                     _data.writeStringArray(values);
-                    boolean _status = mRemote.transact(TRANSACTION_setStringArray, _data, null, IBinder.FLAG_ONEWAY);
+                    boolean _status = mRemote.transact(TRANSACTION_setStringArray, _data, _reply, IBinder.FLAG_ONEWAY);
+                    _reply.readException();
                     if (!_status && getDefaultImpl() != null) {
                         getDefaultImpl().setStringArray(key, values);
                     }
                 } finally {
+                    _reply.recycle();
                     _data.recycle();
                 }
             }
@@ -358,15 +381,18 @@ public interface ISharePreference extends IInterface {
                     return;
                 }
                 Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
                     _data.writeString(key);
                     _data.writeInt(value);
-                    boolean _status = mRemote.transact(TRANSACTION_setInt, _data, null, IBinder.FLAG_ONEWAY);
+                    boolean _status = mRemote.transact(TRANSACTION_setInt, _data, _reply, IBinder.FLAG_ONEWAY);
+                    _reply.readException();
                     if (!_status && getDefaultImpl() != null) {
                         getDefaultImpl().setInt(key, value);
                     }
                 } finally {
+                    _reply.recycle();
                     _data.recycle();
                 }
             }
@@ -378,15 +404,18 @@ public interface ISharePreference extends IInterface {
                     return;
                 }
                 Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
                     _data.writeString(key);
                     _data.writeDouble(value);
-                    boolean _status = mRemote.transact(TRANSACTION_setDouble, _data, null, IBinder.FLAG_ONEWAY);
+                    boolean _status = mRemote.transact(TRANSACTION_setDouble, _data, _reply, IBinder.FLAG_ONEWAY);
+                    _reply.readException();
                     if (!_status && getDefaultImpl() != null) {
                         getDefaultImpl().setDouble(key, value);
                     }
                 } finally {
+                    _reply.recycle();
                     _data.recycle();
                 }
             }
@@ -398,15 +427,18 @@ public interface ISharePreference extends IInterface {
                     return;
                 }
                 Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
                     _data.writeString(key);
                     _data.writeLong(value);
-                    boolean _status = mRemote.transact(TRANSACTION_setLong, _data, null, IBinder.FLAG_ONEWAY);
+                    boolean _status = mRemote.transact(TRANSACTION_setLong, _data, _reply, IBinder.FLAG_ONEWAY);
+                    _reply.readException();
                     if (!_status && getDefaultImpl() != null) {
                         getDefaultImpl().setLong(key, value);
                     }
                 } finally {
+                    _reply.recycle();
                     _data.recycle();
                 }
             }
@@ -418,15 +450,18 @@ public interface ISharePreference extends IInterface {
                     return;
                 }
                 Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
                     _data.writeString(key);
                     _data.writeFloat(value);
-                    boolean _status = mRemote.transact(TRANSACTION_setFloat, _data, null, IBinder.FLAG_ONEWAY);
+                    boolean _status = mRemote.transact(TRANSACTION_setFloat, _data, _reply, IBinder.FLAG_ONEWAY);
+                    _reply.readException();
                     if (!_status && getDefaultImpl() != null) {
                         getDefaultImpl().setFloat(key, value);
                     }
                 } finally {
+                    _reply.recycle();
                     _data.recycle();
                 }
             }
@@ -438,15 +473,18 @@ public interface ISharePreference extends IInterface {
                     return;
                 }
                 Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
                     _data.writeString(key);
                     _data.writeInt(value ? 1 : 0);
-                    boolean _status = mRemote.transact(TRANSACTION_setBoolean, _data, null, IBinder.FLAG_ONEWAY);
+                    boolean _status = mRemote.transact(TRANSACTION_setBoolean, _data, _reply, IBinder.FLAG_ONEWAY);
+                    _reply.readException();
                     if (!_status && getDefaultImpl() != null) {
                         getDefaultImpl().setBoolean(key, value);
                     }
                 } finally {
+                    _reply.recycle();
                     _data.recycle();
                 }
             }
@@ -562,7 +600,6 @@ public interface ISharePreference extends IInterface {
                     Log.d("IronBridge-ISharePreference", "remote api version is too low, require 2");
                     return Float.MAX_VALUE;
                 }
-                float _result;
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
                 try {
@@ -602,40 +639,40 @@ public interface ISharePreference extends IInterface {
     }
 
     @BridgeVersion(2)
-    void setScope(String[] scope) throws RemoteException;
+    void setScope(String[] scope) throws RemoteException, SecurityException;
 
     @BridgeVersion(2)
     void addCallback(ISharePreferenceCallback callback) throws RemoteException;
     @BridgeVersion(2)
     void removeCallback(ISharePreferenceCallback callback) throws RemoteException;
     @BridgeVersion(2)
-    void setString(String key, String value) throws RemoteException;
+    void setString(String key, String value) throws RemoteException, SecurityException;
     @BridgeVersion(2)
-    void setStringArray(String key, String[] values) throws RemoteException;
+    void setStringArray(String key, String[] values) throws RemoteException, SecurityException;
     @BridgeVersion(2)
-    void setInt(String key, int value) throws RemoteException;
+    void setInt(String key, int value) throws RemoteException, SecurityException;
     @BridgeVersion(2)
-    void setDouble(String key, double value) throws RemoteException;
+    void setDouble(String key, double value) throws RemoteException, SecurityException;
     @BridgeVersion(2)
-    void setLong(String key, long value) throws RemoteException;
+    void setLong(String key, long value) throws RemoteException, SecurityException;
     @BridgeVersion(2)
-    void setFloat(String key, float value) throws RemoteException;
+    void setFloat(String key, float value) throws RemoteException, SecurityException;
     @BridgeVersion(2)
-    void setBoolean(String key, boolean value) throws RemoteException;
+    void setBoolean(String key, boolean value) throws RemoteException, SecurityException;
 
     @BridgeVersion(2)
-    String getString(String key, String defValue) throws RemoteException;
+    String getString(String key, String defValue) throws RemoteException, SecurityException;
     @BridgeVersion(2)
-    String[] getStringArray(String key, String[] defValue) throws RemoteException;
+    String[] getStringArray(String key, String[] defValue) throws RemoteException, SecurityException;
     @BridgeVersion(2)
-    int getInt(String key, int defValue) throws RemoteException;
+    int getInt(String key, int defValue) throws RemoteException, SecurityException;
     @BridgeVersion(2)
-    double getDouble(String key, double defValue) throws RemoteException;
+    double getDouble(String key, double defValue) throws RemoteException, SecurityException;
     @BridgeVersion(2)
-    long getLong(String key, long defValue) throws RemoteException;
+    long getLong(String key, long defValue) throws RemoteException, SecurityException;
     @BridgeVersion(2)
-    float getFloat(String key, float defValue) throws RemoteException;
+    float getFloat(String key, float defValue) throws RemoteException, SecurityException;
     @BridgeVersion(2)
-    boolean getBoolean(String key, boolean defValue) throws RemoteException;
+    boolean getBoolean(String key, boolean defValue) throws RemoteException, SecurityException;
 
 }

@@ -28,7 +28,7 @@ public interface Ironbridge extends IInterface {
     abstract class Stub extends Binder implements Ironbridge {
 
         public static final String DESCRIPTOR = "com.qqlittleice.ironbridge.aidl.Ironbridge";
-        public static final int api = 1;
+        public static final int api = 2;
 
         static final int TRANSACTION_addListener = IBinder.FIRST_CALL_TRANSACTION;
         static final int TRANSACTION_removeListener = IBinder.FIRST_CALL_TRANSACTION + 1;
@@ -276,23 +276,17 @@ public interface Ironbridge extends IInterface {
                 case TRANSACTION_getSharePreference: {
                     data.enforceInterface(descriptor);
                     String channel = data.readString();
-                    reply.writeNoException();
                     ISharePreference iSP = getSharePreference(channel);
-                    Log.d("IronBridge", "getSharePreference: " + iSP);
-                    IBinder iBinder = iSP.asBinder();
-                    Log.d("IronBridge", "getSharePreference iBinder: " + iBinder);
-                    reply.writeStrongBinder(iBinder);
+                    reply.writeNoException();
+                    reply.writeStrongBinder(iSP != null ? iSP.asBinder() : null);
                     return true;
                 }
                 case TRANSACTION_createSharePreference: {
                     data.enforceInterface(descriptor);
                     String channel = data.readString();
-                    reply.writeNoException();
                     ISharePreference iSP = createSharePreference(channel);
-                    Log.d("IronBridge", "getSharePreference: " + iSP);
-                    IBinder iBinder = iSP.asBinder();
-                    Log.d("IronBridge", "getSharePreference iBinder: " + iBinder);
-                    reply.writeStrongBinder(iBinder);
+                    reply.writeNoException();
+                    reply.writeStrongBinder(iSP != null ? iSP.asBinder() : null);
                     return true;
                 }
                 case TRANSACTION_API: {
@@ -853,8 +847,8 @@ public interface Ironbridge extends IInterface {
 
             @Override
             public ISharePreference createSharePreference(String channel) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge", "remote api version is too low, require 2");
                     return null;
                 }
                 ISharePreference _result = null;
@@ -885,8 +879,8 @@ public interface Ironbridge extends IInterface {
 
             @Override
             public ISharePreference getSharePreference(String channel) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge", "remote api version is too low, require 2");
                     return null;
                 }
                 ISharePreference _result = null;
@@ -987,7 +981,7 @@ public interface Ironbridge extends IInterface {
     void sendIBinder(String channel, String key, IBinder value) throws RemoteException;
 
     @BridgeVersion(2)
-    ISharePreference getSharePreference(String channel) throws RemoteException;
+    ISharePreference getSharePreference(String channel) throws RemoteException, SecurityException;
     @BridgeVersion(2)
-    ISharePreference createSharePreference(String channel) throws RemoteException;
+    ISharePreference createSharePreference(String channel) throws RemoteException, SecurityException, NullPointerException;
 }

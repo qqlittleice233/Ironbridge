@@ -90,7 +90,7 @@ public class IronBridge {
      * <p>
      * @return {@link ISharePreference}
      */
-    @BridgeVersion(1)
+    @BridgeVersion(2)
     @Nullable
     public static ISharePreference createSharePreference(String channel) throws RemoteException {
         Ironbridge bridge = getPublicBridge();

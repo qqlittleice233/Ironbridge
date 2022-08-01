@@ -1,10 +1,7 @@
 package com.qqlittleice.ironbridge.xposed.service
 
 import android.app.AndroidAppHelper
-import android.os.Binder
-import android.os.IBinder
-import android.os.Parcel
-import android.os.Parcelable
+import android.os.*
 import android.util.Log
 import com.qqlittleice.ironbridge.api.aidl.BridgeListener
 import com.qqlittleice.ironbridge.api.aidl.ISharePreference
@@ -535,6 +532,9 @@ class IronbridgeService: Ironbridge.Stub() {
     }
 
     override fun createSharePreference(channel: String): ISharePreference {
+        if (mKV.getStringSet("SPList") == null) {
+            mKV.putStringSet("SPList", emptySet())
+        }
         if (mKV.getStringSet("SPList").contains(channel) || mKVMap.containsKey(channel)) {
             throw IllegalArgumentException("SharePreference already exists: $channel")
         }

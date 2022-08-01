@@ -12,8 +12,8 @@ import java.io.File
 class ISharePreferenceService(name: String) : ISharePreference.Stub() {
     private val callbacks = mutableListOf<ISharePreferenceCallback>()
     private val kvStore = FastKV.Builder(File(SystemServerDirUtils.baseServerDir(), "FastKV").absolutePath, name).build()
-    private val scopeKey = "__Scope__"
-    private val createPackNameKey = "__CreatePackName__"
+    private val scopeKey = "____Scope____"
+    private val createPackNameKey = "____CreatePackName____"
     private val blackList = arrayListOf(createPackNameKey, scopeKey)
 
     fun setCreatePackName(packName: String) {
