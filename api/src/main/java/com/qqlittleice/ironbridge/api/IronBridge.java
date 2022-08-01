@@ -3,10 +3,12 @@ package com.qqlittleice.ironbridge.api;
 import android.annotation.SuppressLint;
 import android.os.IBinder;
 import android.os.Parcel;
+import android.os.RemoteException;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.qqlittleice.ironbridge.api.aidl.ISharePreference;
 import com.qqlittleice.ironbridge.api.aidl.Ironbridge;
 import com.qqlittleice.ironbridge.api.annotation.BridgeVersion;
 
@@ -66,6 +68,36 @@ public class IronBridge {
     @Nullable
     public static Ironbridge getPublicBridge() {
         return getBridge("public");
+    }
+
+    /**
+     * Get the bridge SharePreference.
+     * <p>
+     * @return {@link ISharePreference}
+     */
+    @BridgeVersion(1)
+    @Nullable
+    public static ISharePreference getSharePreference(String channel) throws RemoteException {
+        Ironbridge bridge = getPublicBridge();
+        if (bridge == null) {
+            return null;
+        }
+        return bridge.getSharePreference(channel);
+    }
+
+    /**
+     * Create the bridge SharePreference.
+     * <p>
+     * @return {@link ISharePreference}
+     */
+    @BridgeVersion(1)
+    @Nullable
+    public static ISharePreference createSharePreference(String channel) throws RemoteException {
+        Ironbridge bridge = getPublicBridge();
+        if (bridge == null) {
+            return null;
+        }
+        return bridge.createSharePreference(channel);
     }
 
 }

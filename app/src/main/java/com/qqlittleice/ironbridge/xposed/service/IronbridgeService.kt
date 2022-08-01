@@ -1,17 +1,40 @@
 package com.qqlittleice.ironbridge.xposed.service
 
+import android.app.AndroidAppHelper
+import android.os.Binder
 import android.os.IBinder
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
 import com.qqlittleice.ironbridge.api.aidl.BridgeListener
+import com.qqlittleice.ironbridge.api.aidl.ISharePreference
 import com.qqlittleice.ironbridge.api.aidl.Ironbridge
 import com.qqlittleice.ironbridge.xposed.utils.LogUtil
+import com.qqlittleice.ironbridge.xposed.utils.SystemServerDirUtils
+import io.fastkv.FastKV
+import io.fastkv.FastKVConfig
+import java.io.File
 import java.io.Serializable
 
 class IronbridgeService: Ironbridge.Stub() {
 
     private val mListeners = arrayListOf<BridgeListener>()
+    private val mKV = FastKV.Builder(File(SystemServerDirUtils.baseServerDir(), "Config").absolutePath, "Ironbridge").build()
+    private val mKVMap: HashMap<String, ISharePreferenceService> = hashMapOf()
+
+    init {
+        FastKVConfig.setLogger(object : FastKV.Logger {
+            override fun i(name: String, message: String) {
+                LogUtil.i("FastKVConfig-$name: $message")
+            }
+            override fun w(name: String, e: Exception) {
+                LogUtil.w("FastKVConfig-$name: $e")
+            }
+            override fun e(name: String, e: Exception) {
+                LogUtil.e("FastKVConfig-$name: $e")
+            }
+        })
+    }
 
     override fun addListener(iBridgeListener: BridgeListener) {
         runCatching {
@@ -485,6 +508,38 @@ class IronbridgeService: Ironbridge.Stub() {
                 }
             }
         }.onFailure { LogUtil.xpe(it) }
+    }
+
+    override fun getSharePreference(channel: String): ISharePreference? {
+        var result: ISharePreferenceService? = null
+        if (mKVMap.containsKey(channel)) {
+            result = mKVMap[channel]!!
+        }
+        if (mKV.getStringSet("SPList").contains(channel)) {
+            result = ISharePreferenceService(channel)
+            mKVMap[channel] = result
+        }
+        if (result != null) {
+            val pList = AndroidAppHelper.currentApplication().applicationContext.packageManager.getPackagesForUid(Binder.getCallingUid()) ?: return null
+            for (pName in pList) {
+                if (result.getScope().contains(pName)) {
+                    return result
+                }
+            }
+            throw SecurityException("Permission denied")
+        }
+        return null
+    }
+
+    override fun createSharePreference(channel: String): ISharePreference {
+        if (mKV.getStringSet("SPList").contains(channel) || mKVMap.containsKey(channel)) {
+            throw IllegalArgumentException("SharePreference already exists: $channel")
+        }
+        val sp = ISharePreferenceService(channel)
+        sp.setCreateUid(Binder.getCallingUid())
+        mKVMap[channel] = sp
+        mKV.putStringSet("SPList", mKVMap.keys)
+        return sp
     }
 
     private fun getBridgeListenerVersion(binder: IBinder): Int {

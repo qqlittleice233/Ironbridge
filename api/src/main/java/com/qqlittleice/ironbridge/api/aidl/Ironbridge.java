@@ -25,59 +25,6 @@ import java.util.stream.Collectors;
 public interface Ironbridge extends IInterface {
 
     @Keep
-    class Default implements Ironbridge {
-        @Override
-        public void addListener(BridgeListener listener) {}
-        @Override
-        public void removeListener(BridgeListener listener) {}
-        @Override
-        public void sendString(String channel, String key, String value) {}
-        @Override
-        public void sendInt(String channel, String key, int value) {}
-        @Override
-        public void sendLong(String channel, String key, long value) {}
-        @Override
-        public void sendFloat(String channel, String key, float value) {}
-        @Override
-        public void sendDouble(String channel, String key, double value) {}
-        @Override
-        public void sendBoolean(String channel, String key, boolean value) {}
-        @Override
-        public void sendStringList(String channel, String key, List<String> value) {}
-        @Override
-        public void sendIntList(String channel, String key, List<Integer> value) {}
-        @Override
-        public void sendLongList(String channel, String key, List<Long> value) {}
-        @Override
-        public void sendFloatList(String channel, String key, List<Float> value) {}
-        @Override
-        public void sendDoubleList(String channel, String key, List<Double> value) {}
-        @Override
-        public void sendBooleanList(String channel, String key, List<Boolean> value) {}
-        @Override
-        public void sendStringArray(String channel, String key, String[] value) {}
-        @Override
-        public void sendIntArray(String channel, String key, int[] value) {}
-        @Override
-        public void sendLongArray(String channel, String key, long[] value) {}
-        @Override
-        public void sendFloatArray(String channel, String key, float[] value) {}
-        @Override
-        public void sendDoubleArray(String channel, String key, double[] value) {}
-        @Override
-        public void sendBooleanArray(String channel, String key, boolean[] value) {}
-        @Override
-        public void sendParcelable(String channel, String key, Parcelable value) {}
-        @Override
-        public void sendSerializable(String channel, String key, Serializable value) {}
-        @Override
-        public void sendIBinder(String channel, String key, IBinder value) {}
-
-        @Override
-        public IBinder asBinder() { return null; }
-    }
-
-    @Keep
     abstract class Stub extends Binder implements Ironbridge {
 
         public static final String DESCRIPTOR = "com.qqlittleice.ironbridge.aidl.Ironbridge";
@@ -106,6 +53,8 @@ public interface Ironbridge extends IInterface {
         static final int TRANSACTION_sendParcelable = IBinder.FIRST_CALL_TRANSACTION + 20;
         static final int TRANSACTION_sendSerializable = IBinder.FIRST_CALL_TRANSACTION + 21;
         static final int TRANSACTION_sendIBinder = IBinder.FIRST_CALL_TRANSACTION + 22;
+        static final int TRANSACTION_getSharePreference = IBinder.FIRST_CALL_TRANSACTION + 23;
+        static final int TRANSACTION_createSharePreference = IBinder.FIRST_CALL_TRANSACTION + 24;
         static final int TRANSACTION_API = IBinder.LAST_CALL_TRANSACTION;
 
         public Stub() {
@@ -322,6 +271,28 @@ public interface Ironbridge extends IInterface {
                     String key = data.readString();
                     IBinder value = data.readStrongBinder();
                     sendIBinder(channel, key, value);
+                    return true;
+                }
+                case TRANSACTION_getSharePreference: {
+                    data.enforceInterface(descriptor);
+                    String channel = data.readString();
+                    reply.writeNoException();
+                    ISharePreference iSP = getSharePreference(channel);
+                    Log.d("IronBridge", "getSharePreference: " + iSP);
+                    IBinder iBinder = iSP.asBinder();
+                    Log.d("IronBridge", "getSharePreference iBinder: " + iBinder);
+                    reply.writeStrongBinder(iBinder);
+                    return true;
+                }
+                case TRANSACTION_createSharePreference: {
+                    data.enforceInterface(descriptor);
+                    String channel = data.readString();
+                    reply.writeNoException();
+                    ISharePreference iSP = createSharePreference(channel);
+                    Log.d("IronBridge", "getSharePreference: " + iSP);
+                    IBinder iBinder = iSP.asBinder();
+                    Log.d("IronBridge", "getSharePreference iBinder: " + iBinder);
+                    reply.writeStrongBinder(iBinder);
                     return true;
                 }
                 case TRANSACTION_API: {
@@ -879,6 +850,70 @@ public interface Ironbridge extends IInterface {
                     _data.recycle();
                 }
             }
+
+            @Override
+            public ISharePreference createSharePreference(String channel) throws RemoteException {
+                if (!checkApiVersion(1)) {
+                    Log.d("IronBridge", "remote api version is too low, require 1");
+                    return null;
+                }
+                ISharePreference _result = null;
+                Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    _data.writeString(channel);
+                    boolean _status = mRemote.transact(Stub.TRANSACTION_createSharePreference, _data, _reply, 0);
+                    _reply.readException();
+                    if (_status) {
+                        IBinder binder = _reply.readStrongBinder();
+                        if (binder == null) {
+                            Log.d("IronBridge", "binder is null");
+                            return null;
+                        }
+                        _result = ISharePreference.Stub.asInterface(binder);
+                    } else {
+                        Log.d("IronBridge", "transaction error");
+                    }
+
+                } finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+                return _result;
+            }
+
+            @Override
+            public ISharePreference getSharePreference(String channel) throws RemoteException {
+                if (!checkApiVersion(1)) {
+                    Log.d("IronBridge", "remote api version is too low, require 1");
+                    return null;
+                }
+                ISharePreference _result = null;
+                Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    _data.writeString(channel);
+                    boolean _status = mRemote.transact(Stub.TRANSACTION_getSharePreference, _data, _reply, 0);
+                    _reply.readException();
+                    if (_status) {
+                        IBinder binder = _reply.readStrongBinder();
+                        if (binder == null) {
+                            Log.d("IronBridge", "binder is null");
+                            return null;
+                        }
+                        _result = ISharePreference.Stub.asInterface(binder);
+                    } else {
+                        Log.d("IronBridge", "transaction error");
+                    }
+
+                } finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+                return _result;
+            }
         }
     }
 
@@ -951,4 +986,8 @@ public interface Ironbridge extends IInterface {
     @BridgeVersion(1)
     void sendIBinder(String channel, String key, IBinder value) throws RemoteException;
 
+    @BridgeVersion(1)
+    ISharePreference getSharePreference(String channel) throws RemoteException;
+    @BridgeVersion(1)
+    ISharePreference createSharePreference(String channel) throws RemoteException;
 }
