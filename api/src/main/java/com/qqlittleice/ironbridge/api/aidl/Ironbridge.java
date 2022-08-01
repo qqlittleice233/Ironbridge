@@ -853,8 +853,8 @@ public interface Ironbridge extends IInterface {
 
             @Override
             public ISharePreference createSharePreference(String channel) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge", "remote api version is too low, require 2");
                     return null;
                 }
                 ISharePreference _result = null;
@@ -885,8 +885,8 @@ public interface Ironbridge extends IInterface {
 
             @Override
             public ISharePreference getSharePreference(String channel) throws RemoteException {
-                if (!checkApiVersion(1)) {
-                    Log.d("IronBridge", "remote api version is too low, require 1");
+                if (!checkApiVersion(2)) {
+                    Log.d("IronBridge", "remote api version is too low, require 2");
                     return null;
                 }
                 ISharePreference _result = null;
